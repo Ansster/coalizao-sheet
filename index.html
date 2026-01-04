@@ -16,149 +16,49 @@
     background: linear-gradient(180deg, #0a0a0a 0%, #1a0e0e 100%);
     color: #c84a4a;
     font-family: "IBM Plex Sans", sans-serif;
-    padding: 12px;
+    padding: 20px;
     margin: 0;
     min-height: 100vh;
   }
 
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(200, 74, 74, 0.3);
-    padding-bottom: 8px;
-  }
-
-  .tab {
-    background: rgba(200, 74, 74, 0.1);
-    border: 1px solid rgba(200, 74, 74, 0.3);
-    color: #c84a4a;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    border-radius: 4px 4px 0 0;
-    font-weight: 500;
-  }
-
-  .tab:hover {
-    background: rgba(200, 74, 74, 0.2);
-  }
-
-  .tab.active {
-    background: rgba(200, 74, 74, 0.3);
-    border-bottom-color: transparent;
-    box-shadow: 0 0 10px rgba(200, 74, 74, 0.3);
-  }
-
-  .tab-content {
-    display: none;
-  }
-
-  .tab-content.active {
-    display: block;
-  }
-
   .ficha {
+    max-width: 580px;
+    margin: auto;
     background: rgba(20, 10, 10, 0.6);
     border: 2px solid rgba(200, 74, 74, 0.3);
     border-radius: 8px;
-    padding: 20px;
+    padding: 24px;
     box-shadow: 0 0 30px rgba(200, 74, 74, 0.15),
                 inset 0 0 20px rgba(0, 0, 0, 0.5);
-    margin-bottom: 12px;
-    position: relative;
-  }
-
-  .player-card {
-    background: rgba(20, 10, 10, 0.4);
-    border: 1px solid rgba(200, 74, 74, 0.25);
-    border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .player-card:hover {
-    border-color: rgba(200, 74, 74, 0.5);
-    background: rgba(20, 10, 10, 0.6);
-    transform: translateX(4px);
-  }
-
-  .player-card.expanded {
-    background: rgba(20, 10, 10, 0.8);
-    border-color: #c84a4a;
-  }
-
-  .player-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .player-name {
-    font-family: "Special Elite", cursive;
-    font-size: 16px;
-    letter-spacing: 1px;
-  }
-
-  .conviccao-mini {
-    display: flex;
-    gap: 4px;
-  }
-
-  .dot-mini {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1px solid #c84a4a;
-    background: transparent;
-  }
-
-  .dot-mini.ativo {
-    background: #c84a4a;
-  }
-
-  .player-details {
-    display: none;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(200, 74, 74, 0.2);
-  }
-
-  .player-card.expanded .player-details {
-    display: block;
   }
 
   h2 {
     font-family: "Nosifer", cursive;
     letter-spacing: 4px;
     text-align: center;
-    font-size: 28px;
+    font-size: 32px;
     margin: 0 0 8px 0;
-    text-shadow: 0 0 10px rgba(200, 74, 74, 0.8);
+    text-shadow: 0 0 10px rgba(200, 74, 74, 0.8),
+                 0 0 20px rgba(200, 74, 74, 0.4);
     color: #e36b6b;
   }
 
   .subtitle {
     text-align: center;
-    font-size: 10px;
-    letter-spacing: 2px;
+    font-size: 11px;
+    letter-spacing: 3px;
     opacity: 0.5;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
     font-weight: 300;
   }
 
   h3 {
     font-family: "Special Elite", cursive;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-align: center;
-    margin-top: 24px;
-    margin-bottom: 12px;
-    font-size: 16px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-size: 18px;
     text-transform: uppercase;
     position: relative;
     padding-bottom: 8px;
@@ -177,11 +77,11 @@
 
   .field-group {
     position: relative;
-    margin-top: 16px;
+    margin-top: 20px;
   }
 
   label {
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 2px;
     opacity: 0.7;
     display: block;
@@ -197,8 +97,8 @@
     border: 1px solid rgba(200, 74, 74, 0.3);
     border-radius: 4px;
     color: #e8a5a5;
-    padding: 8px 10px;
-    font-size: 13px;
+    padding: 10px 12px;
+    font-size: 14px;
     outline: none;
     font-family: "IBM Plex Sans", sans-serif;
     transition: all 0.3s ease;
@@ -217,38 +117,46 @@
 
   textarea {
     resize: vertical;
-    min-height: 50px;
-    line-height: 1.4;
+    min-height: 60px;
+    line-height: 1.5;
   }
 
-  .condicoes { min-height: 60px; }
-  .caracteristicas { min-height: 100px; }
-  .tormentos { min-height: 70px; }
+  .condicoes {
+    min-height: 80px;
+  }
+
+  .caracteristicas {
+    min-height: 140px;
+  }
+
+  .tormentos {
+    min-height: 90px;
+  }
 
   .conviccao-section {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(200, 74, 74, 0.2);
     border-radius: 8px;
-    padding: 16px;
-    margin-top: 20px;
+    padding: 20px;
+    margin-top: 24px;
   }
 
   .conviccao-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 12px;
+    margin-top: 18px;
   }
 
   .conviccao {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .dot {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     border: 2px solid #c84a4a;
     cursor: pointer;
@@ -257,20 +165,35 @@
     box-shadow: 0 0 5px rgba(200, 74, 74, 0.3);
   }
 
+  .dot::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+
   .dot.ativo {
     background: #c84a4a;
-    box-shadow: 0 0 12px rgba(200, 74, 74, 0.6);
+    box-shadow: 0 0 12px rgba(200, 74, 74, 0.6),
+                inset 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .dot.ativo::before {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 100, 100, 0.5), transparent);
   }
 
   .dot:hover {
     transform: scale(1.2);
     border-color: #e36b6b;
+    box-shadow: 0 0 15px rgba(200, 74, 74, 0.8);
   }
 
   .actions {
     text-align: center;
-    margin-top: 20px;
-    padding-top: 16px;
+    margin-top: 28px;
+    padding-top: 24px;
     border-top: 1px solid rgba(200, 74, 74, 0.2);
   }
 
@@ -278,9 +201,9 @@
     background: rgba(200, 74, 74, 0.15);
     border: 1px solid #c84a4a;
     color: #e36b6b;
-    padding: 8px 20px;
+    padding: 10px 24px;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
     transition: all 0.3s ease;
@@ -296,21 +219,13 @@
     transform: translateY(-2px);
   }
 
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    opacity: 0.5;
-    font-style: italic;
+  button:active {
+    transform: translateY(0);
   }
 
-  .loading {
-    text-align: center;
-    padding: 20px;
-    opacity: 0.7;
-  }
-
+  /* Scrollbar customizada */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
@@ -319,258 +234,184 @@
 
   ::-webkit-scrollbar-thumb {
     background: rgba(200, 74, 74, 0.5);
-    border-radius: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(200, 74, 74, 0.7);
+  }
+
+  /* Animação de entrada */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ficha {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  /* Decoração de canto */
+  .corner-decoration {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(200, 74, 74, 0.3);
+    pointer-events: none;
+  }
+
+  .corner-decoration.top-left {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .corner-decoration.top-right {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .corner-decoration.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+  }
+
+  .corner-decoration.bottom-right {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
   }
 </style>
 </head>
 
 <body>
 
-<div id="loading" class="loading">Conectando ao Owlbear...</div>
+<div class="ficha">
+  <span class="corner-decoration top-left"></span>
+  <span class="corner-decoration top-right"></span>
+  <span class="corner-decoration bottom-left"></span>
+  <span class="corner-decoration bottom-right"></span>
 
-<div id="app" style="display: none;">
-  <div class="tabs">
-    <div class="tab active" data-tab="my-sheet">Minha Ficha</div>
-    <div class="tab" data-tab="all-sheets" id="master-tab" style="display: none;">Todas as Fichas</div>
+  <h2>TERRA DEVASTADA</h2>
+  <div class="subtitle">Ficha de Personagem</div>
+
+  <div class="field-group">
+    <label>Nome do Personagem</label>
+    <input type="text" id="nome" placeholder="Digite o nome...">
   </div>
 
-  <!-- ABA: MINHA FICHA -->
-  <div class="tab-content active" id="my-sheet">
-    <div class="ficha">
-      <h2>TERRA DEVASTADA</h2>
-      <div class="subtitle">Ficha de Personagem</div>
+  <div class="field-group">
+    <label>Condições</label>
+    <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável • Abalado..."></textarea>
+  </div>
 
-      <div class="field-group">
-        <label>Nome do Personagem</label>
-        <input type="text" id="nome" placeholder="Digite o nome...">
-      </div>
+  <div class="field-group">
+    <label>Características</label>
+    <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais, peculiaridades..."></textarea>
+  </div>
 
-      <div class="field-group">
-        <label>Condições</label>
-        <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
-      </div>
+  <div class="field-group">
+    <label>Tormentos</label>
+    <textarea class="tormentos" id="tormentos" placeholder="Culpa profunda, medo recorrente, obsessões, traumas..."></textarea>
+  </div>
 
-      <div class="field-group">
-        <label>Características</label>
-        <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios..."></textarea>
-      </div>
-
-      <div class="field-group">
-        <label>Tormentos</label>
-        <textarea class="tormentos" id="tormentos" placeholder="Culpa, medo, obsessões..."></textarea>
-      </div>
-
-      <div class="conviccao-section">
-        <h3>Convicção</h3>
-        <div class="conviccao-wrapper">
-          <div class="conviccao" id="conviccao">
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button id="limpar">⚠ Limpar Minha Ficha</button>
+  <div class="conviccao-section">
+    <h3>Convicção</h3>
+    <div class="conviccao-wrapper">
+      <div class="conviccao" id="conviccao">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       </div>
     </div>
   </div>
 
-  <!-- ABA: TODAS AS FICHAS (MESTRE) -->
-  <div class="tab-content" id="all-sheets">
-    <div id="players-list"></div>
+  <div class="actions">
+    <button id="limpar">⚠ Limpar Ficha</button>
   </div>
 </div>
 
-<script type="module">
-import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3.1.0/+esm";
-
-const ID = "com.terradevastada.sheet";
-let currentPlayerId = null;
-let currentRole = null;
-
-// Inicializar Owlbear SDK
-OBR.onReady(async () => {
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-
-  // Obter informações do jogador
-  currentPlayerId = await OBR.player.getId();
-  currentRole = await OBR.player.getRole();
-
-  // Se for GM, mostrar aba de todas as fichas
-  if (currentRole === 'GM') {
-    document.getElementById('master-tab').style.display = 'block';
-  }
-
-  // Carregar dados iniciais
-  await carregarMinhaDados();
-  
-  // Escutar mudanças no metadata da sala
-  OBR.room.onMetadataChange(async (metadata) => {
-    if (currentRole === 'GM') {
-      renderizarTodasFichas(metadata);
-    }
-  });
-
-  // Configurar eventos
-  setupEventos();
-});
-
-// Carregar dados do jogador atual
-async function carregarMinhaDados() {
-  try {
-    const metadata = await OBR.room.getMetadata();
-    const minhaFicha = metadata[`${ID}/${currentPlayerId}`];
+<script>
+  // Carregar dados salvos ao abrir
+  function carregarDados() {
+    const dados = JSON.parse(localStorage.getItem('terraDevastada') || '{}');
     
-    if (minhaFicha) {
-      document.getElementById('nome').value = minhaFicha.nome || '';
-      document.getElementById('condicoes').value = minhaFicha.condicoes || '';
-      document.getElementById('caracteristicas').value = minhaFicha.caracteristicas || '';
-      document.getElementById('tormentos').value = minhaFicha.tormentos || '';
-      
-      const dots = document.querySelectorAll('#conviccao .dot');
-      if (minhaFicha.conviccao) {
-        minhaFicha.conviccao.forEach((ativo, index) => {
-          if (ativo && dots[index]) {
-            dots[index].classList.add('ativo');
-          }
-        });
-      }
+    if (dados.nome) document.getElementById('nome').value = dados.nome;
+    if (dados.condicoes) document.getElementById('condicoes').value = dados.condicoes;
+    if (dados.caracteristicas) document.getElementById('caracteristicas').value = dados.caracteristicas;
+    if (dados.tormentos) document.getElementById('tormentos').value = dados.tormentos;
+    
+    // Carregar convicção
+    if (dados.conviccao) {
+      const dots = document.querySelectorAll('.dot');
+      dados.conviccao.forEach((ativo, index) => {
+        if (ativo && dots[index]) {
+          dots[index].classList.add('ativo');
+        }
+      });
     }
-  } catch (err) {
-    console.error('Erro ao carregar dados:', err);
-  }
-}
-
-// Salvar dados do jogador
-async function salvarMinhaDados() {
-  const dots = Array.from(document.querySelectorAll('#conviccao .dot')).map(
-    dot => dot.classList.contains('ativo')
-  );
-  
-  const minhaFicha = {
-    nome: document.getElementById('nome').value,
-    condicoes: document.getElementById('condicoes').value,
-    caracteristicas: document.getElementById('caracteristicas').value,
-    tormentos: document.getElementById('tormentos').value,
-    conviccao: dots,
-    playerName: await OBR.player.getName(),
-    playerColor: await OBR.player.getColor(),
-    lastUpdate: Date.now()
-  };
-
-  try {
-    await OBR.room.setMetadata({
-      [`${ID}/${currentPlayerId}`]: minhaFicha
-    });
-  } catch (err) {
-    console.error('Erro ao salvar:', err);
-  }
-}
-
-// Renderizar todas as fichas (GM)
-function renderizarTodasFichas(metadata) {
-  const container = document.getElementById('players-list');
-  const fichas = Object.entries(metadata).filter(([key]) => key.startsWith(ID));
-  
-  if (fichas.length === 0) {
-    container.innerHTML = '<div class="empty-state">Nenhuma ficha criada ainda</div>';
-    return;
   }
 
-  container.innerHTML = fichas.map(([key, ficha], index) => {
-    const conviccaoAtiva = ficha.conviccao ? ficha.conviccao.filter(Boolean).length : 0;
-    const dotsHtml = Array.from({length: 12}, (_, i) => 
-      `<span class="dot-mini ${i < conviccaoAtiva ? 'ativo' : ''}"></span>`
-    ).join('');
+  // Salvar dados automaticamente
+  function salvarDados() {
+    const dots = Array.from(document.querySelectorAll('.dot')).map(
+      dot => dot.classList.contains('ativo')
+    );
+    
+    const dados = {
+      nome: document.getElementById('nome').value,
+      condicoes: document.getElementById('condicoes').value,
+      caracteristicas: document.getElementById('caracteristicas').value,
+      tormentos: document.getElementById('tormentos').value,
+      conviccao: dots
+    };
+    
+    localStorage.setItem('terraDevastada', JSON.stringify(dados));
+  }
 
-    return `
-      <div class="player-card" onclick="toggleCard(${index})">
-        <div class="player-header">
-          <div class="player-name">${ficha.nome || ficha.playerName || 'Sem nome'}</div>
-          <div class="conviccao-mini">${dotsHtml}</div>
-        </div>
-        <div class="player-details">
-          <div style="margin-bottom: 12px;">
-            <label style="margin: 0;">Condições</label>
-            <div style="font-size: 12px; margin-top: 4px; opacity: 0.9;">${ficha.condicoes || 'Nenhuma'}</div>
-          </div>
-          <div style="margin-bottom: 12px;">
-            <label style="margin: 0;">Características</label>
-            <div style="font-size: 12px; margin-top: 4px; opacity: 0.9;">${ficha.caracteristicas || 'Nenhuma'}</div>
-          </div>
-          <div>
-            <label style="margin: 0;">Tormentos</label>
-            <div style="font-size: 12px; margin-top: 4px; opacity: 0.9;">${ficha.tormentos || 'Nenhum'}</div>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
+  // Eventos de salvamento automático
+  document.getElementById('nome').addEventListener('input', salvarDados);
+  document.getElementById('condicoes').addEventListener('input', salvarDados);
+  document.getElementById('caracteristicas').addEventListener('input', salvarDados);
+  document.getElementById('tormentos').addEventListener('input', salvarDados);
 
-// Toggle expansão do card
-window.toggleCard = function(index) {
-  const cards = document.querySelectorAll('.player-card');
-  cards[index].classList.toggle('expanded');
-}
-
-// Configurar eventos
-function setupEventos() {
-  // Eventos de salvamento
-  document.getElementById('nome').addEventListener('input', salvarMinhaDados);
-  document.getElementById('condicoes').addEventListener('input', salvarMinhaDados);
-  document.getElementById('caracteristicas').addEventListener('input', salvarMinhaDados);
-  document.getElementById('tormentos').addEventListener('input', salvarMinhaDados);
-
-  // Toggle convicção
-  document.querySelectorAll('#conviccao .dot').forEach(dot => {
+  // Toggle de convicção com efeito
+  document.querySelectorAll('.dot').forEach(dot => {
     dot.addEventListener('click', () => {
       dot.classList.toggle('ativo');
-      salvarMinhaDados();
+      salvarDados();
     });
   });
 
-  // Limpar ficha
-  document.getElementById('limpar').addEventListener('click', async () => {
-    if (confirm('⚠ Tem certeza que deseja limpar sua ficha?')) {
-      await OBR.room.setMetadata({
-        [`${ID}/${currentPlayerId}`]: null
-      });
-      
+  // Botão limpar
+  document.getElementById('limpar').addEventListener('click', () => {
+    if (confirm('⚠ Tem certeza que deseja limpar toda a ficha? Esta ação não pode ser desfeita.')) {
+      localStorage.removeItem('terraDevastada');
       document.getElementById('nome').value = '';
       document.getElementById('condicoes').value = '';
       document.getElementById('caracteristicas').value = '';
       document.getElementById('tormentos').value = '';
-      document.querySelectorAll('#conviccao .dot').forEach(dot => {
+      document.querySelectorAll('.dot').forEach(dot => {
         dot.classList.remove('ativo');
       });
     }
   });
 
-  // Navegação entre abas
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', async () => {
-      const targetTab = tab.dataset.tab;
-      
-      // Atualizar abas ativas
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      
-      tab.classList.add('active');
-      document.getElementById(targetTab).classList.add('active');
-
-      // Se entrou na aba GM, carregar fichas
-      if (targetTab === 'all-sheets' && currentRole === 'GM') {
-        const metadata = await OBR.room.getMetadata();
-        renderizarTodasFichas(metadata);
-      }
-    });
-  });
-}
+  // Carregar dados ao iniciar
+  carregarDados();
 </script>
 
 </body>
