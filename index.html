@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terra Devastada</title>
 
+<script src="https://owlbear.rodeo/sdk/1.5.5/owlbear.rodeo.sdk.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Special+Elite&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -121,17 +123,9 @@
     line-height: 1.5;
   }
 
-  .condicoes {
-    min-height: 80px;
-  }
-
-  .caracteristicas {
-    min-height: 140px;
-  }
-
-  .tormentos {
-    min-height: 90px;
-  }
+  .condicoes { min-height: 80px; }
+  .caracteristicas { min-height: 140px; }
+  .tormentos { min-height: 90px; }
 
   .conviccao-section {
     background: rgba(0, 0, 0, 0.3);
@@ -211,6 +205,7 @@
     font-weight: 500;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(200, 74, 74, 0.2);
+    margin: 0 5px;
   }
 
   button:hover {
@@ -223,7 +218,59 @@
     transform: translateY(0);
   }
 
-  /* Scrollbar customizada */
+  /* Painel do Mestre */
+  .gm-panel {
+    max-width: 580px;
+    margin: auto;
+  }
+
+  .player-card {
+    background: rgba(20, 10, 10, 0.6);
+    border: 2px solid rgba(200, 74, 74, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 20px rgba(200, 74, 74, 0.1);
+  }
+
+  .player-card h4 {
+    font-family: "Special Elite", cursive;
+    margin: 0 0 12px 0;
+    color: #e36b6b;
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .player-info {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #d99;
+  }
+
+  .player-info strong {
+    color: #c84a4a;
+    display: inline-block;
+    min-width: 120px;
+  }
+
+  .conviction-dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .conviction-dots .mini-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #c84a4a;
+  }
+
+  .conviction-dots .mini-dot.ativo {
+    background: #c84a4a;
+    box-shadow: 0 0 8px rgba(200, 74, 74, 0.6);
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -241,7 +288,6 @@
     background: rgba(200, 74, 74, 0.7);
   }
 
-  /* Animação de entrada */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -253,11 +299,10 @@
     }
   }
 
-  .ficha {
+  .ficha, .gm-panel {
     animation: fadeIn 0.6s ease-out;
   }
 
-  /* Decoração de canto */
   .corner-decoration {
     position: absolute;
     width: 40px;
@@ -293,12 +338,28 @@
     border-left: none;
     border-top: none;
   }
+
+  .hidden {
+    display: none;
+  }
+
+  .status-indicator {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    background: rgba(200, 74, 74, 0.2);
+    border: 1px solid rgba(200, 74, 74, 0.4);
+  }
 </style>
 </head>
 
 <body>
 
-<div class="ficha">
+<!-- Visualização do Jogador -->
+<div id="player-view" class="ficha">
   <span class="corner-decoration top-left"></span>
   <span class="corner-decoration top-right"></span>
   <span class="corner-decoration bottom-left"></span>
@@ -344,9 +405,182 @@
   </div>
 </div>
 
+<!-- Painel do Mestre -->
+<div id="gm-view" class="gm-panel hidden">
+  <div class="ficha" style="padding: 20px;">
+    <h2>PAINEL DO MESTRE</h2>
+    <div class="subtitle">Fichas dos Jogadores</div>
+    <div class="status-indicator">🎲 Visualização do Mestre</div>
+    <div id="players-list"></div>
+    <div class="actions">
+      <button id="refresh-gm">🔄 Atualizar</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Carregar dados salvos ao abrir
-  function carregarDados() {
+  let isGM = false;
+  let currentPlayerId = null;
+
+  // Inicializar Owlbear SDK
+  async function init() {
+    try {
+      await OBR.onReady();
+      
+      // Verificar se é GM
+      const role = await OBR.player.getRole();
+      isGM = (role === "GM");
+      
+      // Pegar ID do jogador atual
+      currentPlayerId = await OBR.player.getId();
+      
+      // Mostrar view apropriada
+      if (isGM) {
+        document.getElementById('player-view').classList.add('hidden');
+        document.getElementById('gm-view').classList.remove('hidden');
+        carregarTodasFichas();
+      } else {
+        document.getElementById('player-view').classList.remove('hidden');
+        document.getElementById('gm-view').classList.add('hidden');
+        carregarFichaJogador();
+        setupAutoSave();
+      }
+      
+    } catch (error) {
+      console.error('Erro ao inicializar Owlbear:', error);
+      // Fallback para modo local se não estiver no Owlbear
+      carregarDadosLocal();
+    }
+  }
+
+  // Carregar ficha do jogador atual
+  async function carregarFichaJogador() {
+    try {
+      const metadata = await OBR.player.getMetadata();
+      const ficha = metadata['terraDevastada'];
+      
+      if (ficha) {
+        if (ficha.nome) document.getElementById('nome').value = ficha.nome;
+        if (ficha.condicoes) document.getElementById('condicoes').value = ficha.condicoes;
+        if (ficha.caracteristicas) document.getElementById('caracteristicas').value = ficha.caracteristicas;
+        if (ficha.tormentos) document.getElementById('tormentos').value = ficha.tormentos;
+        
+        // Carregar convicção
+        if (ficha.conviccao) {
+          const dots = document.querySelectorAll('.dot');
+          ficha.conviccao.forEach((ativo, index) => {
+            if (ativo && dots[index]) {
+              dots[index].classList.add('ativo');
+            }
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao carregar ficha:', error);
+    }
+  }
+
+  // Salvar ficha do jogador
+  async function salvarFichaJogador() {
+    try {
+      const dots = Array.from(document.querySelectorAll('.dot')).map(
+        dot => dot.classList.contains('ativo')
+      );
+      
+      const ficha = {
+        nome: document.getElementById('nome').value,
+        condicoes: document.getElementById('condicoes').value,
+        caracteristicas: document.getElementById('caracteristicas').value,
+        tormentos: document.getElementById('tormentos').value,
+        conviccao: dots,
+        ultimaAtualizacao: new Date().toISOString()
+      };
+      
+      await OBR.player.setMetadata({
+        terraDevastada: ficha
+      });
+      
+    } catch (error) {
+      console.error('Erro ao salvar ficha:', error);
+    }
+  }
+
+  // Configurar salvamento automático
+  function setupAutoSave() {
+    document.getElementById('nome').addEventListener('input', salvarFichaJogador);
+    document.getElementById('condicoes').addEventListener('input', salvarFichaJogador);
+    document.getElementById('caracteristicas').addEventListener('input', salvarFichaJogador);
+    document.getElementById('tormentos').addEventListener('input', salvarFichaJogador);
+
+    document.querySelectorAll('.dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        dot.classList.toggle('ativo');
+        salvarFichaJogador();
+      });
+    });
+
+    document.getElementById('limpar').addEventListener('click', async () => {
+      if (confirm('⚠ Tem certeza que deseja limpar toda a ficha? Esta ação não pode ser desfeita.')) {
+        await OBR.player.setMetadata({ terraDevastada: null });
+        document.getElementById('nome').value = '';
+        document.getElementById('condicoes').value = '';
+        document.getElementById('caracteristicas').value = '';
+        document.getElementById('tormentos').value = '';
+        document.querySelectorAll('.dot').forEach(dot => {
+          dot.classList.remove('ativo');
+        });
+      }
+    });
+  }
+
+  // Carregar todas as fichas (apenas para GM)
+  async function carregarTodasFichas() {
+    try {
+      const party = await OBR.party.getPlayers();
+      const listContainer = document.getElementById('players-list');
+      listContainer.innerHTML = '';
+      
+      party.forEach(player => {
+        const ficha = player.metadata?.terraDevastada;
+        
+        if (ficha && ficha.nome) {
+          const card = document.createElement('div');
+          card.className = 'player-card';
+          
+          const convictionHtml = ficha.conviccao ? 
+            ficha.conviccao.map(ativo => 
+              `<span class="mini-dot ${ativo ? 'ativo' : ''}"></span>`
+            ).join('') : '';
+          
+          card.innerHTML = `
+            <h4>${ficha.nome || 'Sem nome'}</h4>
+            <div class="player-info">
+              <div><strong>Jogador:</strong> ${player.name}</div>
+              ${ficha.condicoes ? `<div><strong>Condições:</strong> ${ficha.condicoes}</div>` : ''}
+              ${ficha.caracteristicas ? `<div><strong>Características:</strong> ${ficha.caracteristicas}</div>` : ''}
+              ${ficha.tormentos ? `<div><strong>Tormentos:</strong> ${ficha.tormentos}</div>` : ''}
+              ${convictionHtml ? `<div><strong>Convicção:</strong><div class="conviction-dots">${convictionHtml}</div></div>` : ''}
+            </div>
+          `;
+          
+          listContainer.appendChild(card);
+        }
+      });
+      
+      if (listContainer.children.length === 0) {
+        listContainer.innerHTML = '<div class="player-card"><div class="player-info">Nenhuma ficha encontrada. Os jogadores precisam criar suas fichas primeiro.</div></div>';
+      }
+      
+    } catch (error) {
+      console.error('Erro ao carregar fichas:', error);
+    }
+  }
+
+  // Botão de refresh do GM
+  document.getElementById('refresh-gm')?.addEventListener('click', carregarTodasFichas);
+
+  // Fallback para localStorage (se não estiver no Owlbear)
+  function carregarDadosLocal() {
     const dados = JSON.parse(localStorage.getItem('terraDevastada') || '{}');
     
     if (dados.nome) document.getElementById('nome').value = dados.nome;
@@ -354,7 +588,6 @@
     if (dados.caracteristicas) document.getElementById('caracteristicas').value = dados.caracteristicas;
     if (dados.tormentos) document.getElementById('tormentos').value = dados.tormentos;
     
-    // Carregar convicção
     if (dados.conviccao) {
       const dots = document.querySelectorAll('.dot');
       dados.conviccao.forEach((ativo, index) => {
@@ -363,55 +596,55 @@
         }
       });
     }
+    
+    setupAutoSaveLocal();
   }
 
-  // Salvar dados automaticamente
-  function salvarDados() {
-    const dots = Array.from(document.querySelectorAll('.dot')).map(
-      dot => dot.classList.contains('ativo')
-    );
-    
-    const dados = {
-      nome: document.getElementById('nome').value,
-      condicoes: document.getElementById('condicoes').value,
-      caracteristicas: document.getElementById('caracteristicas').value,
-      tormentos: document.getElementById('tormentos').value,
-      conviccao: dots
+  function setupAutoSaveLocal() {
+    const salvarLocal = () => {
+      const dots = Array.from(document.querySelectorAll('.dot')).map(
+        dot => dot.classList.contains('ativo')
+      );
+      
+      const dados = {
+        nome: document.getElementById('nome').value,
+        condicoes: document.getElementById('condicoes').value,
+        caracteristicas: document.getElementById('caracteristicas').value,
+        tormentos: document.getElementById('tormentos').value,
+        conviccao: dots
+      };
+      
+      localStorage.setItem('terraDevastada', JSON.stringify(dados));
     };
-    
-    localStorage.setItem('terraDevastada', JSON.stringify(dados));
+
+    document.getElementById('nome').addEventListener('input', salvarLocal);
+    document.getElementById('condicoes').addEventListener('input', salvarLocal);
+    document.getElementById('caracteristicas').addEventListener('input', salvarLocal);
+    document.getElementById('tormentos').addEventListener('input', salvarLocal);
+
+    document.querySelectorAll('.dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        dot.classList.toggle('ativo');
+        salvarLocal();
+      });
+    });
+
+    document.getElementById('limpar').addEventListener('click', () => {
+      if (confirm('⚠ Tem certeza que deseja limpar toda a ficha? Esta ação não pode ser desfeita.')) {
+        localStorage.removeItem('terraDevastada');
+        document.getElementById('nome').value = '';
+        document.getElementById('condicoes').value = '';
+        document.getElementById('caracteristicas').value = '';
+        document.getElementById('tormentos').value = '';
+        document.querySelectorAll('.dot').forEach(dot => {
+          dot.classList.remove('ativo');
+        });
+      }
+    });
   }
 
-  // Eventos de salvamento automático
-  document.getElementById('nome').addEventListener('input', salvarDados);
-  document.getElementById('condicoes').addEventListener('input', salvarDados);
-  document.getElementById('caracteristicas').addEventListener('input', salvarDados);
-  document.getElementById('tormentos').addEventListener('input', salvarDados);
-
-  // Toggle de convicção com efeito
-  document.querySelectorAll('.dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      dot.classList.toggle('ativo');
-      salvarDados();
-    });
-  });
-
-  // Botão limpar
-  document.getElementById('limpar').addEventListener('click', () => {
-    if (confirm('⚠ Tem certeza que deseja limpar toda a ficha? Esta ação não pode ser desfeita.')) {
-      localStorage.removeItem('terraDevastada');
-      document.getElementById('nome').value = '';
-      document.getElementById('condicoes').value = '';
-      document.getElementById('caracteristicas').value = '';
-      document.getElementById('tormentos').value = '';
-      document.querySelectorAll('.dot').forEach(dot => {
-        dot.classList.remove('ativo');
-      });
-    }
-  });
-
-  // Carregar dados ao iniciar
-  carregarDados();
+  // Inicializar
+  init();
 </script>
 
 </body>
