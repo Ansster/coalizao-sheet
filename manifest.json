@@ -1,10 +1,15 @@
 {
-  "owb_manifest_version": 1,
-  "name": "Ficha Terra Devastada",
-  "description": "Ficha de RPG Coalizão integrada ao Owlbear",
+  "manifest_version": 1,
+  "name": "Terra Devastada",
+  "description": "Ficha de personagem Terra Devastada",
   "version": "1.0.0",
-  "author": "Yuri Barros",
-  "type": "character-sheet",
-  "url": "https://ansster.github.io/coalizao-sheet/index.html",
-  "icon": "https://ansster.github.io/coalizao-sheet/icon.png"
+  "author": "Ansster",
+  "icon": "/icon.png",
+  "action": {
+    "title": "Terra Devastada",
+    "icon": "/icon.png",
+    "popover": "/index.html",
+    "height": 600,
+    "width": 400
+  }
 }
