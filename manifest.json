@@ -4,11 +4,11 @@
   "description": "Ficha de personagem Terra Devastada",
   "version": "1.0.0",
   "author": "Ansster",
-  "icon": "/icon.png",
+  "icon": "icon.png",
   "action": {
     "title": "Terra Devastada",
-    "icon": "/icon.png",
-    "popover": "/index.html",
+    "icon": "icon.png",
+    "popover": "index.html",
     "height": 600,
     "width": 400
   }
