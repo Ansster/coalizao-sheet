@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ficha Coalizão</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="sheet">
+    <h2>Jogador</h2>
+
+    <label>Nome</label>
+    <input type="text" id="nome">
+
+    <div class="stats">
+      <div>
+        <span>Vida</span>
+        <button onclick="change('vida', -1)">−</button>
+        <span id="vida">10</span>
+        <button onclick="change('vida', 1)">+</button>
+      </div>
+
+      <div>
+        <span>Sanidade</span>
+        <button onclick="change('sanidade', -1)">−</button>
+        <span id="sanidade">10</span>
+        <button onclick="change('sanidade', 1)">+</button>
+      </div>
+    </div>
+
+    <label>Inventário</label>
+    <textarea></textarea>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
