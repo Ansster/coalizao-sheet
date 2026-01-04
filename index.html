@@ -384,9 +384,9 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/owlbear-rodeo/2.4.0/sdk.min.js"></script>
+<script type="module">
+import OBR from "https://unpkg.com/@owlbear-rodeo/sdk@3.1.0/lib/index.js";
 
-<script>
 const ID = "com.terradevastada.sheet";
 let currentPlayerId = null;
 let currentRole = null;
@@ -397,7 +397,7 @@ OBR.onReady(async () => {
   document.getElementById('app').style.display = 'block';
 
   // Obter informações do jogador
-  currentPlayerId = OBR.player.id;
+  currentPlayerId = await OBR.player.getId();
   currentRole = await OBR.player.getRole();
 
   // Se for GM, mostrar aba de todas as fichas
@@ -513,7 +513,7 @@ function renderizarTodasFichas(metadata) {
 }
 
 // Toggle expansão do card
-function toggleCard(index) {
+window.toggleCard = function(index) {
   const cards = document.querySelectorAll('.player-card');
   cards[index].classList.toggle('expanded');
 }
