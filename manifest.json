@@ -1,5 +1,5 @@
 {
-  "manifest_version": 1,
+  "owb_manifest_version": 1,
   "name": "Ficha Terra Devastada",
   "description": "Ficha de RPG Coalizão integrada ao Owlbear",
   "version": "1.0.0",
