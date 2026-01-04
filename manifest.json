@@ -1,0 +1,9 @@
+{
+  "name": "Ficha Terra Devastada",
+  "description": "Ficha de RPG Coalizão integrada ao Owlbear",
+  "version": "1.0.0",
+  "author": "Yuri Barros",
+  "type": "character-sheet",
+  "url": "https://ansster.github.io/coalizao-sheet/index.html",
+  "icon": "https://ansster.github.io/coalizao-sheet/icon.png"
+}
