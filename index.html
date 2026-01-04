@@ -2,16 +2,22 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terra Devastada</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     background: #0a0a0a;
     color: #c84a4a;
     font-family: "IBM Plex Sans", sans-serif;
-    padding: 40px;
+    padding: 20px;
+    margin: 0;
   }
 
   .ficha {
@@ -23,17 +29,18 @@
     font-family: "Nosifer", cursive;
     letter-spacing: 3px;
     text-align: center;
-    font-size: 34px;
-    margin-bottom: 36px;
+    font-size: 28px;
+    margin-bottom: 24px;
+    margin-top: 0;
   }
 
   h3 {
     font-family: "Nosifer", cursive;
     letter-spacing: 2px;
     text-align: center;
-    margin-top: 38px;
+    margin-top: 28px;
     margin-bottom: 16px;
-    font-size: 22px;
+    font-size: 20px;
   }
 
   label {
@@ -53,6 +60,7 @@
     padding: 6px 2px;
     font-size: 14px;
     outline: none;
+    font-family: "IBM Plex Sans", sans-serif;
   }
 
   input:focus, textarea:focus {
@@ -60,10 +68,10 @@
   }
 
   textarea {
-    resize: none;
+    resize: vertical;
+    min-height: 60px;
   }
 
-  /* CAIXAS */
   .condicoes {
     min-height: 80px;
   }
@@ -76,16 +84,18 @@
     min-height: 90px;
   }
 
-  /* CONVICÇÃO */
   .conviccao-wrapper {
     display: flex;
     justify-content: center;
     margin-top: 18px;
+    margin-bottom: 20px;
   }
 
   .conviccao {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .dot {
@@ -104,6 +114,29 @@
   .dot:hover {
     transform: scale(1.15);
   }
+
+  .actions {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(200, 74, 74, 0.25);
+  }
+
+  button {
+    background: rgba(200, 74, 74, 0.2);
+    border: 1px solid #c84a4a;
+    color: #e36b6b;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: 0.15s;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+
+  button:hover {
+    background: rgba(200, 74, 74, 0.35);
+  }
 </style>
 </head>
 
@@ -113,34 +146,100 @@
   <h2>TERRA DEVASTADA</h2>
 
   <label>Nome</label>
-  <input type="text">
+  <input type="text" id="nome">
 
   <label>Condições</label>
-  <textarea class="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
+  <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
 
   <label>Características</label>
-  <textarea class="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais..."></textarea>
+  <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais..."></textarea>
 
   <label>Tormentos</label>
-  <textarea class="tormentos" placeholder="Culpa, medo recorrente, obsessões..."></textarea>
+  <textarea class="tormentos" id="tormentos" placeholder="Culpa, medo recorrente, obsessões..."></textarea>
 
   <h3>Convicção</h3>
   <div class="conviccao-wrapper">
-    <div class="conviccao">
+    <div class="conviccao" id="conviccao">
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
   </div>
+
+  <div class="actions">
+    <button id="limpar">Limpar Ficha</button>
+  </div>
 </div>
 
 <script>
+  // Carregar dados salvos ao abrir
+  function carregarDados() {
+    const dados = JSON.parse(localStorage.getItem('terraDevastada') || '{}');
+    
+    if (dados.nome) document.getElementById('nome').value = dados.nome;
+    if (dados.condicoes) document.getElementById('condicoes').value = dados.condicoes;
+    if (dados.caracteristicas) document.getElementById('caracteristicas').value = dados.caracteristicas;
+    if (dados.tormentos) document.getElementById('tormentos').value = dados.tormentos;
+    
+    // Carregar convicção
+    if (dados.conviccao) {
+      const dots = document.querySelectorAll('.dot');
+      dados.conviccao.forEach((ativo, index) => {
+        if (ativo && dots[index]) {
+          dots[index].classList.add('ativo');
+        }
+      });
+    }
+  }
+
+  // Salvar dados automaticamente
+  function salvarDados() {
+    const dots = Array.from(document.querySelectorAll('.dot')).map(
+      dot => dot.classList.contains('ativo')
+    );
+    
+    const dados = {
+      nome: document.getElementById('nome').value,
+      condicoes: document.getElementById('condicoes').value,
+      caracteristicas: document.getElementById('caracteristicas').value,
+      tormentos: document.getElementById('tormentos').value,
+      conviccao: dots
+    };
+    
+    localStorage.setItem('terraDevastada', JSON.stringify(dados));
+  }
+
+  // Eventos de salvamento automático
+  document.getElementById('nome').addEventListener('input', salvarDados);
+  document.getElementById('condicoes').addEventListener('input', salvarDados);
+  document.getElementById('caracteristicas').addEventListener('input', salvarDados);
+  document.getElementById('tormentos').addEventListener('input', salvarDados);
+
+  // Toggle de convicção
   document.querySelectorAll('.dot').forEach(dot => {
     dot.addEventListener('click', () => {
       dot.classList.toggle('ativo');
+      salvarDados();
     });
   });
+
+  // Botão limpar
+  document.getElementById('limpar').addEventListener('click', () => {
+    if (confirm('Tem certeza que deseja limpar toda a ficha?')) {
+      localStorage.removeItem('terraDevastada');
+      document.getElementById('nome').value = '';
+      document.getElementById('condicoes').value = '';
+      document.getElementById('caracteristicas').value = '';
+      document.getElementById('tormentos').value = '';
+      document.querySelectorAll('.dot').forEach(dot => {
+        dot.classList.remove('ativo');
+      });
+    }
+  });
+
+  // Carregar dados ao iniciar
+  carregarDados();
 </script>
 
 </body>
