@@ -1,38 +1,147 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Ficha Coalizão</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Terra Devastada</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    background: #0a0a0a;
+    color: #c84a4a;
+    font-family: "IBM Plex Sans", sans-serif;
+    padding: 40px;
+  }
+
+  .ficha {
+    max-width: 580px;
+    margin: auto;
+  }
+
+  h2 {
+    font-family: "Nosifer", cursive;
+    letter-spacing: 3px;
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 36px;
+  }
+
+  h3 {
+    font-family: "Nosifer", cursive;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-top: 38px;
+    margin-bottom: 16px;
+    font-size: 22px;
+  }
+
+  label {
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    opacity: 0.85;
+    margin-top: 18px;
+    display: block;
+  }
+
+  input, textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(200, 74, 74, 0.45);
+    color: #e36b6b;
+    padding: 6px 2px;
+    font-size: 14px;
+    outline: none;
+  }
+
+  input:focus, textarea:focus {
+    border-bottom-color: #e36b6b;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  /* CAIXAS */
+  .condicoes {
+    min-height: 80px;
+  }
+
+  .caracteristicas {
+    min-height: 160px;
+  }
+
+  .tormentos {
+    min-height: 90px;
+  }
+
+  /* CONVICÇÃO */
+  .conviccao-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+  }
+
+  .conviccao {
+    display: flex;
+    gap: 10px;
+  }
+
+  .dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1.5px solid #c84a4a;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+
+  .dot.ativo {
+    background: #c84a4a;
+  }
+
+  .dot:hover {
+    transform: scale(1.15);
+  }
+</style>
 </head>
+
 <body>
 
-  <div class="sheet">
-    <h2>Jogador</h2>
+<div class="ficha">
+  <h2>TERRA DEVASTADA</h2>
 
-    <label>Nome</label>
-    <input type="text" id="nome">
+  <label>Nome</label>
+  <input type="text">
 
-    <div class="stats">
-      <div>
-        <span>Vida</span>
-        <button onclick="change('vida', -1)">−</button>
-        <span id="vida">10</span>
-        <button onclick="change('vida', 1)">+</button>
-      </div>
+  <label>Condições</label>
+  <textarea class="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
 
-      <div>
-        <span>Sanidade</span>
-        <button onclick="change('sanidade', -1)">−</button>
-        <span id="sanidade">10</span>
-        <button onclick="change('sanidade', 1)">+</button>
-      </div>
+  <label>Características</label>
+  <textarea class="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais..."></textarea>
+
+  <label>Tormentos</label>
+  <textarea class="tormentos" placeholder="Culpa, medo recorrente, obsessões..."></textarea>
+
+  <h3>Convicção</h3>
+  <div class="conviccao-wrapper">
+    <div class="conviccao">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
-
-    <label>Inventário</label>
-    <textarea></textarea>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script>
+  document.querySelectorAll('.dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      dot.classList.toggle('ativo');
+    });
+  });
+</script>
+
 </body>
 </html>
