@@ -4,8 +4,8 @@
   "manifest_version": 1,
   "action": {
     "title": "Terra Devastada",
-    "icon": "https://ansster.github.io/coalizao-sheet/icon.svg",
-    "popover": "https://ansster.github.io/coalizao-sheet/index.html",
+    "icon": "icon.svg",
+    "popover": "index.html",
     "height": 600,
     "width": 400
   }
