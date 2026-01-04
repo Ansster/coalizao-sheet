@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terra Devastada</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Special+Elite&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
   * {
@@ -13,82 +13,230 @@
   }
 
   body {
-    background: #0a0a0a;
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a0e0e 100%);
     color: #c84a4a;
     font-family: "IBM Plex Sans", sans-serif;
-    padding: 20px;
+    padding: 12px;
     margin: 0;
+    min-height: 100vh;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(200, 74, 74, 0.3);
+    padding-bottom: 8px;
+  }
+
+  .tab {
+    background: rgba(200, 74, 74, 0.1);
+    border: 1px solid rgba(200, 74, 74, 0.3);
+    color: #c84a4a;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border-radius: 4px 4px 0 0;
+    font-weight: 500;
+  }
+
+  .tab:hover {
+    background: rgba(200, 74, 74, 0.2);
+  }
+
+  .tab.active {
+    background: rgba(200, 74, 74, 0.3);
+    border-bottom-color: transparent;
+    box-shadow: 0 0 10px rgba(200, 74, 74, 0.3);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
   }
 
   .ficha {
-    max-width: 580px;
-    margin: auto;
+    background: rgba(20, 10, 10, 0.6);
+    border: 2px solid rgba(200, 74, 74, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(200, 74, 74, 0.15),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .player-card {
+    background: rgba(20, 10, 10, 0.4);
+    border: 1px solid rgba(200, 74, 74, 0.25);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .player-card:hover {
+    border-color: rgba(200, 74, 74, 0.5);
+    background: rgba(20, 10, 10, 0.6);
+    transform: translateX(4px);
+  }
+
+  .player-card.expanded {
+    background: rgba(20, 10, 10, 0.8);
+    border-color: #c84a4a;
+  }
+
+  .player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .player-name {
+    font-family: "Special Elite", cursive;
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  .conviccao-mini {
+    display: flex;
+    gap: 4px;
+  }
+
+  .dot-mini {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid #c84a4a;
+    background: transparent;
+  }
+
+  .dot-mini.ativo {
+    background: #c84a4a;
+  }
+
+  .player-details {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(200, 74, 74, 0.2);
+  }
+
+  .player-card.expanded .player-details {
+    display: block;
   }
 
   h2 {
     font-family: "Nosifer", cursive;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-align: center;
     font-size: 28px;
-    margin-bottom: 24px;
-    margin-top: 0;
+    margin: 0 0 8px 0;
+    text-shadow: 0 0 10px rgba(200, 74, 74, 0.8);
+    color: #e36b6b;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+    margin-bottom: 20px;
+    font-weight: 300;
   }
 
   h3 {
-    font-family: "Nosifer", cursive;
+    font-family: "Special Elite", cursive;
     letter-spacing: 2px;
     text-align: center;
-    margin-top: 28px;
-    margin-bottom: 16px;
-    font-size: 20px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 8px;
+  }
+
+  h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c84a4a, transparent);
+  }
+
+  .field-group {
+    position: relative;
+    margin-top: 16px;
   }
 
   label {
-    font-size: 13px;
-    letter-spacing: 0.8px;
-    opacity: 0.85;
-    margin-top: 18px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.7;
     display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #d66;
   }
 
   input, textarea {
     width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(200, 74, 74, 0.45);
-    color: #e36b6b;
-    padding: 6px 2px;
-    font-size: 14px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(200, 74, 74, 0.3);
+    border-radius: 4px;
+    color: #e8a5a5;
+    padding: 8px 10px;
+    font-size: 13px;
     outline: none;
     font-family: "IBM Plex Sans", sans-serif;
+    transition: all 0.3s ease;
   }
 
   input:focus, textarea:focus {
-    border-bottom-color: #e36b6b;
+    border-color: #c84a4a;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px rgba(200, 74, 74, 0.2);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(200, 74, 74, 0.4);
+    font-style: italic;
   }
 
   textarea {
     resize: vertical;
-    min-height: 60px;
+    min-height: 50px;
+    line-height: 1.4;
   }
 
-  .condicoes {
-    min-height: 80px;
-  }
+  .condicoes { min-height: 60px; }
+  .caracteristicas { min-height: 100px; }
+  .tormentos { min-height: 70px; }
 
-  .caracteristicas {
-    min-height: 160px;
-  }
-
-  .tormentos {
-    min-height: 90px;
+  .conviccao-section {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(200, 74, 74, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
   }
 
   .conviccao-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 18px;
-    margin-bottom: 20px;
+    margin-top: 12px;
   }
 
   .conviccao {
@@ -99,147 +247,330 @@
   }
 
   .dot {
-    width: 13px;
-    height: 13px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    border: 1.5px solid #c84a4a;
+    border: 2px solid #c84a4a;
     cursor: pointer;
-    transition: 0.15s;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 0 5px rgba(200, 74, 74, 0.3);
   }
 
   .dot.ativo {
     background: #c84a4a;
+    box-shadow: 0 0 12px rgba(200, 74, 74, 0.6);
   }
 
   .dot:hover {
-    transform: scale(1.15);
+    transform: scale(1.2);
+    border-color: #e36b6b;
   }
 
   .actions {
     text-align: center;
     margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(200, 74, 74, 0.25);
+    padding-top: 16px;
+    border-top: 1px solid rgba(200, 74, 74, 0.2);
   }
 
   button {
-    background: rgba(200, 74, 74, 0.2);
+    background: rgba(200, 74, 74, 0.15);
     border: 1px solid #c84a4a;
     color: #e36b6b;
-    padding: 8px 16px;
+    padding: 8px 20px;
     cursor: pointer;
-    font-size: 12px;
-    letter-spacing: 1px;
-    transition: 0.15s;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
     font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(200, 74, 74, 0.2);
   }
 
   button:hover {
-    background: rgba(200, 74, 74, 0.35);
+    background: rgba(200, 74, 74, 0.3);
+    box-shadow: 0 0 20px rgba(200, 74, 74, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.7;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(200, 74, 74, 0.5);
+    border-radius: 3px;
   }
 </style>
 </head>
 
 <body>
 
-<div class="ficha">
-  <h2>TERRA DEVASTADA</h2>
+<div id="loading" class="loading">Conectando ao Owlbear...</div>
 
-  <label>Nome</label>
-  <input type="text" id="nome">
+<div id="app" style="display: none;">
+  <div class="tabs">
+    <div class="tab active" data-tab="my-sheet">Minha Ficha</div>
+    <div class="tab" data-tab="all-sheets" id="master-tab" style="display: none;">Todas as Fichas</div>
+  </div>
 
-  <label>Condições</label>
-  <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
+  <!-- ABA: MINHA FICHA -->
+  <div class="tab-content active" id="my-sheet">
+    <div class="ficha">
+      <h2>TERRA DEVASTADA</h2>
+      <div class="subtitle">Ficha de Personagem</div>
 
-  <label>Características</label>
-  <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais..."></textarea>
+      <div class="field-group">
+        <label>Nome do Personagem</label>
+        <input type="text" id="nome" placeholder="Digite o nome...">
+      </div>
 
-  <label>Tormentos</label>
-  <textarea class="tormentos" id="tormentos" placeholder="Culpa, medo recorrente, obsessões..."></textarea>
+      <div class="field-group">
+        <label>Condições</label>
+        <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
+      </div>
 
-  <h3>Convicção</h3>
-  <div class="conviccao-wrapper">
-    <div class="conviccao" id="conviccao">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <div class="field-group">
+        <label>Características</label>
+        <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Tormentos</label>
+        <textarea class="tormentos" id="tormentos" placeholder="Culpa, medo, obsessões..."></textarea>
+      </div>
+
+      <div class="conviccao-section">
+        <h3>Convicção</h3>
+        <div class="conviccao-wrapper">
+          <div class="conviccao" id="conviccao">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="limpar">⚠ Limpar Minha Ficha</button>
+      </div>
     </div>
   </div>
 
-  <div class="actions">
-    <button id="limpar">Limpar Ficha</button>
+  <!-- ABA: TODAS AS FICHAS (MESTRE) -->
+  <div class="tab-content" id="all-sheets">
+    <div id="players-list"></div>
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owlbear-rodeo/2.4.0/sdk.min.js"></script>
+
 <script>
-  // Carregar dados salvos ao abrir
-  function carregarDados() {
-    const dados = JSON.parse(localStorage.getItem('terraDevastada') || '{}');
-    
-    if (dados.nome) document.getElementById('nome').value = dados.nome;
-    if (dados.condicoes) document.getElementById('condicoes').value = dados.condicoes;
-    if (dados.caracteristicas) document.getElementById('caracteristicas').value = dados.caracteristicas;
-    if (dados.tormentos) document.getElementById('tormentos').value = dados.tormentos;
-    
-    // Carregar convicção
-    if (dados.conviccao) {
-      const dots = document.querySelectorAll('.dot');
-      dados.conviccao.forEach((ativo, index) => {
-        if (ativo && dots[index]) {
-          dots[index].classList.add('ativo');
-        }
-      });
+const ID = "com.terradevastada.sheet";
+let currentPlayerId = null;
+let currentRole = null;
+
+// Inicializar Owlbear SDK
+OBR.onReady(async () => {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  // Obter informações do jogador
+  currentPlayerId = OBR.player.id;
+  currentRole = await OBR.player.getRole();
+
+  // Se for GM, mostrar aba de todas as fichas
+  if (currentRole === 'GM') {
+    document.getElementById('master-tab').style.display = 'block';
+  }
+
+  // Carregar dados iniciais
+  await carregarMinhaDados();
+  
+  // Escutar mudanças no metadata da sala
+  OBR.room.onMetadataChange(async (metadata) => {
+    if (currentRole === 'GM') {
+      renderizarTodasFichas(metadata);
     }
+  });
+
+  // Configurar eventos
+  setupEventos();
+});
+
+// Carregar dados do jogador atual
+async function carregarMinhaDados() {
+  try {
+    const metadata = await OBR.room.getMetadata();
+    const minhaFicha = metadata[`${ID}/${currentPlayerId}`];
+    
+    if (minhaFicha) {
+      document.getElementById('nome').value = minhaFicha.nome || '';
+      document.getElementById('condicoes').value = minhaFicha.condicoes || '';
+      document.getElementById('caracteristicas').value = minhaFicha.caracteristicas || '';
+      document.getElementById('tormentos').value = minhaFicha.tormentos || '';
+      
+      const dots = document.querySelectorAll('#conviccao .dot');
+      if (minhaFicha.conviccao) {
+        minhaFicha.conviccao.forEach((ativo, index) => {
+          if (ativo && dots[index]) {
+            dots[index].classList.add('ativo');
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.error('Erro ao carregar dados:', err);
+  }
+}
+
+// Salvar dados do jogador
+async function salvarMinhaDados() {
+  const dots = Array.from(document.querySelectorAll('#conviccao .dot')).map(
+    dot => dot.classList.contains('ativo')
+  );
+  
+  const minhaFicha = {
+    nome: document.getElementById('nome').value,
+    condicoes: document.getElementById('condicoes').value,
+    caracteristicas: document.getElementById('caracteristicas').value,
+    tormentos: document.getElementById('tormentos').value,
+    conviccao: dots,
+    playerName: await OBR.player.getName(),
+    playerColor: await OBR.player.getColor(),
+    lastUpdate: Date.now()
+  };
+
+  try {
+    await OBR.room.setMetadata({
+      [`${ID}/${currentPlayerId}`]: minhaFicha
+    });
+  } catch (err) {
+    console.error('Erro ao salvar:', err);
+  }
+}
+
+// Renderizar todas as fichas (GM)
+function renderizarTodasFichas(metadata) {
+  const container = document.getElementById('players-list');
+  const fichas = Object.entries(metadata).filter(([key]) => key.startsWith(ID));
+  
+  if (fichas.length === 0) {
+    container.innerHTML = '<div class="empty-state">Nenhuma ficha criada ainda</div>';
+    return;
   }
 
-  // Salvar dados automaticamente
-  function salvarDados() {
-    const dots = Array.from(document.querySelectorAll('.dot')).map(
-      dot => dot.classList.contains('ativo')
-    );
-    
-    const dados = {
-      nome: document.getElementById('nome').value,
-      condicoes: document.getElementById('condicoes').value,
-      caracteristicas: document.getElementById('caracteristicas').value,
-      tormentos: document.getElementById('tormentos').value,
-      conviccao: dots
-    };
-    
-    localStorage.setItem('terraDevastada', JSON.stringify(dados));
-  }
+  container.innerHTML = fichas.map(([key, ficha], index) => {
+    const conviccaoAtiva = ficha.conviccao ? ficha.conviccao.filter(Boolean).length : 0;
+    const dotsHtml = Array.from({length: 12}, (_, i) => 
+      `<span class="dot-mini ${i < conviccaoAtiva ? 'ativo' : ''}"></span>`
+    ).join('');
 
-  // Eventos de salvamento automático
-  document.getElementById('nome').addEventListener('input', salvarDados);
-  document.getElementById('condicoes').addEventListener('input', salvarDados);
-  document.getElementById('caracteristicas').addEventListener('input', salvarDados);
-  document.getElementById('tormentos').addEventListener('input', salvarDados);
+    return `
+      <div class="player-card" onclick="toggleCard(${index})">
+        <div class="player-header">
+          <div class="player-name">${ficha.nome || ficha.playerName || 'Sem nome'}</div>
+          <div class="conviccao-mini">${dotsHtml}</div>
+        </div>
+        <div class="player-details">
+          <div style="margin-bottom: 12px;">
+            <label style="margin: 0;">Condições</label>
+            <div style="font-size: 12px; margin-top: 4px; opacity: 0.9;">${ficha.condicoes || 'Nenhuma'}</div>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <label style="margin: 0;">Características</label>
+            <div style="font-size: 12px; margin-top: 4px; opacity: 0.9;">${ficha.caracteristicas || 'Nenhuma'}</div>
+          </div>
+          <div>
+            <label style="margin: 0;">Tormentos</label>
+            <div style="font-size: 12px; margin-top: 4px; opacity: 0.9;">${ficha.tormentos || 'Nenhum'}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
 
-  // Toggle de convicção
-  document.querySelectorAll('.dot').forEach(dot => {
+// Toggle expansão do card
+function toggleCard(index) {
+  const cards = document.querySelectorAll('.player-card');
+  cards[index].classList.toggle('expanded');
+}
+
+// Configurar eventos
+function setupEventos() {
+  // Eventos de salvamento
+  document.getElementById('nome').addEventListener('input', salvarMinhaDados);
+  document.getElementById('condicoes').addEventListener('input', salvarMinhaDados);
+  document.getElementById('caracteristicas').addEventListener('input', salvarMinhaDados);
+  document.getElementById('tormentos').addEventListener('input', salvarMinhaDados);
+
+  // Toggle convicção
+  document.querySelectorAll('#conviccao .dot').forEach(dot => {
     dot.addEventListener('click', () => {
       dot.classList.toggle('ativo');
-      salvarDados();
+      salvarMinhaDados();
     });
   });
 
-  // Botão limpar
-  document.getElementById('limpar').addEventListener('click', () => {
-    if (confirm('Tem certeza que deseja limpar toda a ficha?')) {
-      localStorage.removeItem('terraDevastada');
+  // Limpar ficha
+  document.getElementById('limpar').addEventListener('click', async () => {
+    if (confirm('⚠ Tem certeza que deseja limpar sua ficha?')) {
+      await OBR.room.setMetadata({
+        [`${ID}/${currentPlayerId}`]: null
+      });
+      
       document.getElementById('nome').value = '';
       document.getElementById('condicoes').value = '';
       document.getElementById('caracteristicas').value = '';
       document.getElementById('tormentos').value = '';
-      document.querySelectorAll('.dot').forEach(dot => {
+      document.querySelectorAll('#conviccao .dot').forEach(dot => {
         dot.classList.remove('ativo');
       });
     }
   });
 
-  // Carregar dados ao iniciar
-  carregarDados();
+  // Navegação entre abas
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', async () => {
+      const targetTab = tab.dataset.tab;
+      
+      // Atualizar abas ativas
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      tab.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+
+      // Se entrou na aba GM, carregar fichas
+      if (targetTab === 'all-sheets' && currentRole === 'GM') {
+        const metadata = await OBR.room.getMetadata();
+        renderizarTodasFichas(metadata);
+      }
+    });
+  });
+}
 </script>
 
 </body>
