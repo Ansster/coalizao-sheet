@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terra Devastada</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Special+Elite&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
   * {
@@ -13,63 +13,112 @@
   }
 
   body {
-    background: #0a0a0a;
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a0e0e 100%);
     color: #c84a4a;
     font-family: "IBM Plex Sans", sans-serif;
     padding: 20px;
     margin: 0;
+    min-height: 100vh;
   }
 
   .ficha {
     max-width: 580px;
     margin: auto;
+    background: rgba(20, 10, 10, 0.6);
+    border: 2px solid rgba(200, 74, 74, 0.3);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 0 30px rgba(200, 74, 74, 0.15),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
   }
 
   h2 {
     font-family: "Nosifer", cursive;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 24px;
-    margin-top: 0;
+    font-size: 32px;
+    margin: 0 0 8px 0;
+    text-shadow: 0 0 10px rgba(200, 74, 74, 0.8),
+                 0 0 20px rgba(200, 74, 74, 0.4);
+    color: #e36b6b;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 3px;
+    opacity: 0.5;
+    margin-bottom: 28px;
+    font-weight: 300;
   }
 
   h3 {
-    font-family: "Nosifer", cursive;
-    letter-spacing: 2px;
+    font-family: "Special Elite", cursive;
+    letter-spacing: 3px;
     text-align: center;
-    margin-top: 28px;
+    margin-top: 32px;
     margin-bottom: 16px;
-    font-size: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 8px;
+  }
+
+  h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c84a4a, transparent);
+  }
+
+  .field-group {
+    position: relative;
+    margin-top: 20px;
   }
 
   label {
-    font-size: 13px;
-    letter-spacing: 0.8px;
-    opacity: 0.85;
-    margin-top: 18px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.7;
     display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #d66;
   }
 
   input, textarea {
     width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(200, 74, 74, 0.45);
-    color: #e36b6b;
-    padding: 6px 2px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(200, 74, 74, 0.3);
+    border-radius: 4px;
+    color: #e8a5a5;
+    padding: 10px 12px;
     font-size: 14px;
     outline: none;
     font-family: "IBM Plex Sans", sans-serif;
+    transition: all 0.3s ease;
   }
 
   input:focus, textarea:focus {
-    border-bottom-color: #e36b6b;
+    border-color: #c84a4a;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px rgba(200, 74, 74, 0.2);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(200, 74, 74, 0.4);
+    font-style: italic;
   }
 
   textarea {
     resize: vertical;
     min-height: 60px;
+    line-height: 1.5;
   }
 
   .condicoes {
@@ -77,65 +126,169 @@
   }
 
   .caracteristicas {
-    min-height: 160px;
+    min-height: 140px;
   }
 
   .tormentos {
     min-height: 90px;
   }
 
+  .conviccao-section {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(200, 74, 74, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 24px;
+  }
+
   .conviccao-wrapper {
     display: flex;
     justify-content: center;
     margin-top: 18px;
-    margin-bottom: 20px;
   }
 
   .conviccao {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .dot {
-    width: 13px;
-    height: 13px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    border: 1.5px solid #c84a4a;
+    border: 2px solid #c84a4a;
     cursor: pointer;
-    transition: 0.15s;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 0 5px rgba(200, 74, 74, 0.3);
+  }
+
+  .dot::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.2s ease;
   }
 
   .dot.ativo {
     background: #c84a4a;
+    box-shadow: 0 0 12px rgba(200, 74, 74, 0.6),
+                inset 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .dot.ativo::before {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 100, 100, 0.5), transparent);
   }
 
   .dot:hover {
-    transform: scale(1.15);
+    transform: scale(1.2);
+    border-color: #e36b6b;
+    box-shadow: 0 0 15px rgba(200, 74, 74, 0.8);
   }
 
   .actions {
     text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(200, 74, 74, 0.25);
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(200, 74, 74, 0.2);
   }
 
   button {
-    background: rgba(200, 74, 74, 0.2);
+    background: rgba(200, 74, 74, 0.15);
     border: 1px solid #c84a4a;
     color: #e36b6b;
-    padding: 8px 16px;
+    padding: 10px 24px;
     cursor: pointer;
-    font-size: 12px;
-    letter-spacing: 1px;
-    transition: 0.15s;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
     font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(200, 74, 74, 0.2);
   }
 
   button:hover {
-    background: rgba(200, 74, 74, 0.35);
+    background: rgba(200, 74, 74, 0.3);
+    box-shadow: 0 0 20px rgba(200, 74, 74, 0.4);
+    transform: translateY(-2px);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(200, 74, 74, 0.5);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(200, 74, 74, 0.7);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ficha {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .corner-decoration {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(200, 74, 74, 0.3);
+    pointer-events: none;
+  }
+
+  .corner-decoration.top-left {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .corner-decoration.top-right {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .corner-decoration.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+  }
+
+  .corner-decoration.bottom-right {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
   }
 </style>
 </head>
@@ -143,32 +296,48 @@
 <body>
 
 <div class="ficha">
+  <span class="corner-decoration top-left"></span>
+  <span class="corner-decoration top-right"></span>
+  <span class="corner-decoration bottom-left"></span>
+  <span class="corner-decoration bottom-right"></span>
+
   <h2>TERRA DEVASTADA</h2>
+  <div class="subtitle">Ficha de Personagem</div>
 
-  <label>Nome</label>
-  <input type="text" id="nome">
+  <div class="field-group">
+    <label>Nome do Personagem</label>
+    <input type="text" id="nome" placeholder="Digite o nome...">
+  </div>
 
-  <label>Condições</label>
-  <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável..."></textarea>
+  <div class="field-group">
+    <label>Condições</label>
+    <textarea class="condicoes" id="condicoes" placeholder="Ferido • Exausto • Instável • Abalado..."></textarea>
+  </div>
 
-  <label>Características</label>
-  <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais..."></textarea>
+  <div class="field-group">
+    <label>Características</label>
+    <textarea class="caracteristicas" id="caracteristicas" placeholder="Marcas físicas, desvios, cicatrizes mentais, peculiaridades..."></textarea>
+  </div>
 
-  <label>Tormentos</label>
-  <textarea class="tormentos" id="tormentos" placeholder="Culpa, medo recorrente, obsessões..."></textarea>
+  <div class="field-group">
+    <label>Tormentos</label>
+    <textarea class="tormentos" id="tormentos" placeholder="Culpa profunda, medo recorrente, obsessões, traumas..."></textarea>
+  </div>
 
-  <h3>Convicção</h3>
-  <div class="conviccao-wrapper">
-    <div class="conviccao" id="conviccao">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  <div class="conviccao-section">
+    <h3>Convicção</h3>
+    <div class="conviccao-wrapper">
+      <div class="conviccao" id="conviccao">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
     </div>
   </div>
 
   <div class="actions">
-    <button id="limpar">Limpar Ficha</button>
+    <button id="limpar">⚠ Limpar Ficha</button>
   </div>
 </div>
 
@@ -226,7 +395,7 @@
 
   // Botão limpar
   document.getElementById('limpar').addEventListener('click', () => {
-    if (confirm('Tem certeza que deseja limpar toda a ficha?')) {
+    if (confirm('⚠ Tem certeza que deseja limpar toda a ficha? Esta ação não pode ser desfeita.')) {
       localStorage.removeItem('terraDevastada');
       document.getElementById('nome').value = '';
       document.getElementById('condicoes').value = '';
